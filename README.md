@@ -20,14 +20,8 @@ historyflow saved.hflow     # open a saved history file
 With [Homebrew](https://brew.sh), on macOS or Linux:
 
 ```sh
-brew tap jdf/historyflow-cli https://github.com/jdf/historyflow-cli
-brew trust jdf/historyflow-cli
-brew install historyflow
+brew install jdf/historyflow/historyflow
 ```
-
-Recent versions of Homebrew will not install from a tap outside its own until
-you say you trust it, which is what the second line does; older versions have no
-`brew trust`, and there you leave it out.
 
 Or download the archive for your platform from the
 [latest release](https://github.com/jdf/historyflow-cli/releases/latest), unpack
@@ -38,5 +32,6 @@ It needs `git` to read a repository's history, and a web browser.
 
 ## This repository
 
-Releases of the program are published here, along with the Homebrew formula
-(`Formula/historyflow.rb`). Both are produced by `.github/workflows/release.yml`.
+Releases of the program are published here, by `.github/workflows/release.yml`.
+The Homebrew formula is in
+[jdf/homebrew-historyflow](https://github.com/jdf/homebrew-historyflow).

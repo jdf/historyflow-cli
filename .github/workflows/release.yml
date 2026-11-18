@@ -1,6 +1,7 @@
 # Builds the historyflow command from its source repository and publishes
-# it here: a GitHub release with one archive per platform, and the
-# Homebrew formula (Formula/historyflow.rb) pointing at them.
+# it here: a GitHub release with one archive per platform and their
+# checksums, from which jdf/homebrew-historyflow writes the Homebrew
+# formula.
 #
 # Run it from the source repository with tools/release.sh, or by hand:
 #
@@ -110,51 +111,4 @@ jobs:
           (cd dist && sha256sum *.tar.gz > SHA256SUMS && cat SHA256SUMS)
           gh release create "v$VERSION" dist/* \
             --title "historyflow $VERSION" \
-            --notes "Install with Homebrew: \`brew tap jdf/historyflow-cli https://github.com/jdf/historyflow-cli && brew install historyflow\`. Or download the archive for your platform below, unpack it, and put \`historyflow\` on your PATH."
-
-      - name: Update the Homebrew formula
-        run: |
-          sha() { grep "historyflow-$VERSION-$1.tar.gz" dist/SHA256SUMS | cut -d' ' -f1; }
-          url() { echo "https://github.com/$GITHUB_REPOSITORY/releases/download/v$VERSION/historyflow-$VERSION-$1.tar.gz"; }
-          mkdir -p Formula
-          cat > Formula/historyflow.rb <<FORMULA
-          # Written by .github/workflows/release.yml; edit it there.
-          class Historyflow < Formula
-            desc "See how a document came to be, version by version"
-            homepage "https://github.com/$GITHUB_REPOSITORY"
-            version "$VERSION"
-            license "MIT"
-
-            on_macos do
-              on_arm do
-                url "$(url aarch64-apple-darwin)"
-                sha256 "$(sha aarch64-apple-darwin)"
-              end
-              on_intel do
-                url "$(url x86_64-apple-darwin)"
-                sha256 "$(sha x86_64-apple-darwin)"
-              end
-            end
-
-            on_linux do
-              on_intel do
-                url "$(url x86_64-unknown-linux-musl)"
-                sha256 "$(sha x86_64-unknown-linux-musl)"
-              end
-            end
-
-            def install
-              bin.install "historyflow"
-            end
-
-            test do
-              assert_match version.to_s, shell_output("#{bin}/historyflow --version")
-            end
-          end
-          FORMULA
-          cat Formula/historyflow.rb
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Formula/historyflow.rb
-          git commit -m "historyflow $VERSION"
-          git push
+            --notes "Install with Homebrew: \`brew install jdf/historyflow/historyflow\`. Or download the archive for your platform below, unpack it, and put \`historyflow\` on your PATH."
