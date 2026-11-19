@@ -15,6 +15,24 @@ historyflow src/main.rs     # open one file's history
 historyflow saved.hflow     # open a saved history file
 ```
 
+It can also show the history of a Wikipedia article, which your browser fetches
+from the wiki, or fetch one into a compact history file to open later:
+
+```sh
+historyflow --wikipedia https://en.wikipedia.org/wiki/Chocolate
+historyflow --wikipedia Chocolate --revisions 2000 -o chocolate.hflow
+historyflow chocolate.hflow
+```
+
+It reads the first 500 revisions unless `--revisions` says otherwise. Wikipedia
+asks every tool to say how to reach whoever is running it, so tell historyflow
+once how to reach you (an email address, a website, or your user name on a
+wiki); it is sent to the wiki with each request and nowhere else:
+
+```sh
+git config --global historyflow.contact you@example.com
+```
+
 ## Install
 
 With [Homebrew](https://brew.sh), on macOS or Linux:
@@ -28,7 +46,8 @@ Or download the archive for your platform from the
 it, and put `historyflow` somewhere on your `PATH`. There are builds for macOS
 (Apple silicon and Intel) and for Linux on x86-64.
 
-It needs `git` to read a repository's history, and a web browser.
+It needs `git` to read a repository's history, a web browser, and `curl` for
+`--wikipedia` with `-o`.
 
 ## This repository
 
