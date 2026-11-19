@@ -1,9 +1,12 @@
 # historyflow
 
-historyflow draws the history of a document as a picture. Each version is a
-vertical line, as tall as the version is long and colored by who wrote each
-part; bands join each passage to the same passage in the next version. You can
-see at a glance who wrote what, when, and what became of it.
+historyflow draws the history of a document as a picture, using the _history
+flow_ visualization invented by
+[Fernanda Viégas](https://www.fernandaviegas.com/) and
+[Martin Wattenberg](https://www.bewitched.com/). Each version is a vertical
+line, as tall as the version is long and colored by who wrote each part; bands
+join each passage to the same passage in the next version. You can see at a
+glance who wrote what, when, and what became of it.
 
 It reads the history of a file in a git repository or of a Wikipedia article,
 and runs in your browser, either from the `historyflow` command or at
